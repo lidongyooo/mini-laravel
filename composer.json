@@ -1,0 +1,19 @@
+{
+    "name": "lidong/mini-laravel",
+    "description": "mini-laravel",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "lidong",
+            "email": "2271439559@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4" : {
+            "App\\": "app/"
+        }
+    },
+    "require": {
+        "psr/container": "^1.0"
+    }
+}
