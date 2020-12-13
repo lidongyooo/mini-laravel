@@ -40,6 +40,8 @@ class Container implements ContainerInterface, \ArrayAccess
         if($this->bindings[$abstract]['share']){
             $this->instances[$abstract] = $object;
         }
+
+        return $object;
     }
 
     protected function build($concrete){
