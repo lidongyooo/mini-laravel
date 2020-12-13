@@ -31,7 +31,15 @@ class Container implements ContainerInterface, \ArrayAccess
 
     public function make($abstract)
     {
-        return $this->bindings[$abstract]['concrete']($this);
+        if(isset($this->instances[$abstract])){
+            return $this->instances[$abstract];
+        }
+
+        $object = $this->bindings[$abstract]['concrete']($this);
+
+        if($this->bindings[$abstract]['share']){
+            $this->instances[$abstract] = $object;
+        }
     }
 
     protected function build($concrete){
