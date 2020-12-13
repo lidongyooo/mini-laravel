@@ -1,11 +1,34 @@
 <?php
+namespace Mini;
+
 use Psr\Container\ContainerInterface;
 
-class Container implements ContainerInterface, ArrayAccess
+class Container implements ContainerInterface, \ArrayAccess
 {
     public function output()
     {
         echo 'container';
+    }
+
+    public function bind($abstract, $concrete, $share = false)
+    {
+
+    }
+
+    public function make($abstract, $concrete)
+    {
+
+    }
+
+
+    public function get($id)
+    {
+        // TODO: Implement get() method.
+    }
+
+    public function has($id)
+    {
+        // TODO: Implement has() method.
     }
 
     public function offsetExists($offset)
@@ -26,15 +49,5 @@ class Container implements ContainerInterface, ArrayAccess
     public function offsetUnset($offset)
     {
         // TODO: Implement offsetUnset() method.
-    }
-
-    public function get($id)
-    {
-        // TODO: Implement get() method.
-    }
-
-    public function has($id)
-    {
-        // TODO: Implement has() method.
     }
 }

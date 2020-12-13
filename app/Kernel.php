@@ -1,9 +1,9 @@
 <?php
-
-
 namespace App;
 
-class Kernel extends \Container
+use Mini\Container;
+
+class Kernel extends Container
 {
 
 }
