@@ -1,8 +1,6 @@
 <?php
 namespace Mini;
 
-use Psr\Container\ContainerInterface;
-
 class Container
 {
 
@@ -48,7 +46,7 @@ class Container
 
     protected function build($concrete){
 
-        $reflector = new ReflectionClass($concrete);
+        $reflector = new \ReflectionClass($concrete);
         $constructor = $reflector->getConstructor();
 
         if( is_null($constructor) ){
