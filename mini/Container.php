@@ -31,7 +31,7 @@ class Container implements ContainerInterface, \ArrayAccess
 
     public function make($abstract)
     {
-        if(isset($this->instances[$abstract])){
+        if (isset($this->instances[$abstract])) {
             return $this->instances[$abstract];
         }
 
@@ -49,7 +49,7 @@ class Container implements ContainerInterface, \ArrayAccess
         $reflector = new ReflectionClass($concrete);
         $constructor = $reflector->getConstructor();
 
-        if(is_null($constructor)){
+        if( is_null($constructor) ){
             return $reflector->newInstance();
         }else{
 
@@ -62,7 +62,7 @@ class Container implements ContainerInterface, \ArrayAccess
 
     protected function getDependencies($parameters){
         $dependencies = [];
-        foreach ($parameters as $parameter){
+        foreach ($parameters as $parameter) {
             $dependencies[] = $this->make($parameter->getClass()->name);
         }
         return $dependencies;
