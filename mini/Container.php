@@ -3,12 +3,14 @@ namespace Mini;
 
 use Psr\Container\ContainerInterface;
 
-class Container implements ContainerInterface, \ArrayAccess
+class Container
 {
 
     protected $bindings = [];
 
     protected $instances = [];
+
+    protected static $instance;
 
     public function __construct(protected $basePath = null)
     {
@@ -16,7 +18,7 @@ class Container implements ContainerInterface, \ArrayAccess
         $this->registerBaseBindings();
     }
 
-    public function bind($abstract, $concrete, $share = false) :void
+    public function bind($abstract, $concrete, $share = false)
     {
         $this->dropStaleInstance($abstract);
 
@@ -60,14 +62,6 @@ class Container implements ContainerInterface, \ArrayAccess
 
     }
 
-    protected function getDependencies($parameters){
-        $dependencies = [];
-        foreach ($parameters as $parameter) {
-            $dependencies[] = $this->make($parameter->getClass()->name);
-        }
-        return $dependencies;
-    }
-
     public function instance($abstract, $instance)
     {
         $this->instances[$abstract] = $instance;
@@ -78,6 +72,23 @@ class Container implements ContainerInterface, \ArrayAccess
         return $this->instances;
     }
 
+    public static function getInstance()
+    {
+        if (is_null(self::$instance)) {
+            self::$instance = new self(realpath(__DIR__.'/../'));
+        }
+
+        return self::$instance;
+    }
+
+    protected function getDependencies($parameters){
+        $dependencies = [];
+        foreach ($parameters as $parameter) {
+            $dependencies[] = $this->make($parameter->getClass()->name);
+        }
+        return $dependencies;
+    }
+
     protected function bindPathsInContainer()
     {
         $this->instance('path.base', $this->basePath);
@@ -86,6 +97,7 @@ class Container implements ContainerInterface, \ArrayAccess
 
     protected function registerBaseBindings()
     {
+        self::$instance = $this;
         $this->instance('app', $this);
         $this->instance(Container::class, $this);
     }
@@ -95,33 +107,4 @@ class Container implements ContainerInterface, \ArrayAccess
         unset($this->instances[$abstract]);
     }
 
-    public function get($id)
-    {
-        // TODO: Implement get() method.
-    }
-
-    public function has($id)
-    {
-        // TODO: Implement has() method.
-    }
-
-    public function offsetExists($offset)
-    {
-        // TODO: Implement offsetExists() method.
-    }
-
-    public function offsetGet($offset)
-    {
-        // TODO: Implement offsetGet() method.
-    }
-
-    public function offsetSet($offset, $value)
-    {
-        // TODO: Implement offsetSet() method.
-    }
-
-    public function offsetUnset($offset)
-    {
-        // TODO: Implement offsetUnset() method.
-    }
 }

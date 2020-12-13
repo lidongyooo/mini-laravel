@@ -4,7 +4,5 @@ $app = new \Mini\Container(
     realpath(__DIR__)
 );
 
-var_dump($app->instances());
-
-
+var_dump(app());
 
