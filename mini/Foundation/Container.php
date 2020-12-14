@@ -1,5 +1,6 @@
 <?php
-namespace Mini;
+
+namespace Mini\Foundation;
 
 class Container
 {
@@ -16,6 +17,31 @@ class Container
         $this->registerBaseBindings();
     }
 
+
+    public function instance($abstract, $instance)
+    {
+        $this->instances[$abstract] = $instance;
+    }
+
+    public function getInstances()
+    {
+        return $this->instances;
+    }
+
+    public static function getContainer()
+    {
+        if (is_null(self::$instance)) {
+            self::$instance = new self(realpath(__DIR__.'/../'));
+        }
+
+        return self::$instance;
+    }
+
+    public function singleton($abstract, $concrete)
+    {
+        $this->bind($abstract, $concrete, true);
+    }
+
     public function bind($abstract, $concrete, $share = false)
     {
         $this->dropStaleInstance($abstract);
@@ -26,7 +52,7 @@ class Container
             };
         }
 
-        $this->bindings[$abstract] = compact($concrete, $share);
+        $this->bindings[$abstract] = compact('concrete', 'share');
     }
 
     public function make($abstract)
@@ -44,7 +70,8 @@ class Container
         return $object;
     }
 
-    protected function build($concrete){
+    protected function build($concrete)
+    {
 
         $reflector = new \ReflectionClass($concrete);
         $constructor = $reflector->getConstructor();
@@ -58,25 +85,6 @@ class Container
             return $reflector->newInstanceArgs($instances);
         }
 
-    }
-
-    public function instance($abstract, $instance)
-    {
-        $this->instances[$abstract] = $instance;
-    }
-
-    public function getInstances()
-    {
-        return $this->instances;
-    }
-
-    public static function getInstance()
-    {
-        if (is_null(self::$instance)) {
-            self::$instance = new self(realpath(__DIR__.'/../'));
-        }
-
-        return self::$instance;
     }
 
     protected function getDependencies($parameters){

@@ -1,8 +1,9 @@
 <?php
 
-$app = new \Mini\Container(
+$app = new \Mini\Foundation\container(
     realpath(__DIR__)
 );
 
-var_dump(app());
+$app->singleton(\Mini\Interfaces\Foundation\KernelContact::class, \App\Http\Kernel::class);
 
+return $app;
