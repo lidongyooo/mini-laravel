@@ -2,6 +2,8 @@
 
 namespace Mini\Foundation;
 
+use Mini\Exceptions\Foundation\BindingResolutionException;
+
 class Container
 {
 
@@ -16,7 +18,6 @@ class Container
         $this->bindPathsInContainer();
         $this->registerBaseBindings();
     }
-
 
     public function instance($abstract, $instance)
     {
@@ -63,7 +64,7 @@ class Container
 
         $object = $this->bindings[$abstract]['concrete']($this);
 
-        if($this->bindings[$abstract]['share']){
+        if ($this->bindings[$abstract]['share']) {
             $this->instances[$abstract] = $object;
         }
 
@@ -89,10 +90,27 @@ class Container
 
     protected function getDependencies($parameters){
         $dependencies = [];
+
         foreach ($parameters as $parameter) {
-            $dependencies[] = $this->make($parameter->getClass()->name);
+            $dependencies[] = $this->resolveClass($parameter);
         }
+
         return $dependencies;
+    }
+
+    protected function resolveClass(\ReflectionParameter $parameter)
+    {
+        $type = $parameter->getType();
+
+        if ($type->isBuiltin() && $type->allowsNull()) {
+            return $parameter->getDefaultValue();
+        }
+
+        if ($type->isBuiltin() && !$type->allowsNull()) {
+            throw new BindingResolutionException("Unresolvable dependency resolving [$parameter] in class {$parameter->getDeclaringClass()->getName()}");
+        }
+
+        return $this->make($type->getName());
     }
 
     protected function bindPathsInContainer()

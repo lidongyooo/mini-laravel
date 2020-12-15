@@ -6,6 +6,12 @@ use Mini\Interfaces\Foundation\KernelContact;
 
 class Kernel implements KernelContact
 {
+
+    public function __construct(protected Container $app)
+    {
+
+    }
+
     public function bootstrap()
     {
         // TODO: Implement bootstrap() method.
