@@ -24,7 +24,7 @@ class Kernel implements KernelContact
 
     public function handle($request)
     {
-        // TODO: Implement handle() method.
+        var_dump(file_get_contents('php://input'));
     }
 
     public function terminate($request, $response)
