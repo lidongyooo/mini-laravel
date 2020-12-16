@@ -5,7 +5,7 @@ namespace Mini\Foundation;
 class Request
 {
 
-    public function __construct(public $get, public $post, public $cookies, public $files, public $server)
+    public function __construct(public $get, public $post, public $cookie, public $files, public $server)
     {
 
     }

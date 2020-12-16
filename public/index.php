@@ -9,3 +9,5 @@ $kernel = $app->make(\Mini\Interfaces\Foundation\KernelContact::class);
 $response = $kernel->handle(
     $request = \Mini\Foundation\Request::capture()
 );
+
+var_dump($request);
