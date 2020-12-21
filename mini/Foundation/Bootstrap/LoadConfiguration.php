@@ -18,9 +18,27 @@ class LoadConfiguration
         $this->loadConfigurationFiles();
     }
 
-    public function get()
+    public function get($key, $default = null)
     {
+        $array = $this->items;
 
+        if ($this->exists($this->items, $key)){
+            return $this->items[$key];
+        }
+
+        if (!str_contains($key, '.')) {
+            return $default;
+        }
+
+        foreach (explode('.', $key) as $segment) {
+            if ($this->exists($array, $segment)) {
+                $array = $array[$segment];
+            } else {
+                return $default;
+            }
+        }
+
+        return $array;
     }
 
     public function set($key, $value = null)
@@ -31,7 +49,7 @@ class LoadConfiguration
         while (count($keys) > 1) {
             $key = array_shift($keys);
 
-            if ( !$this->exists($this->item, $key) ) {
+            if ( !$this->exists($this->items, $key) ) {
                 $array[$key] = [];
             }
 
@@ -41,17 +59,8 @@ class LoadConfiguration
         $array[array_shift($keys)] = $value;
     }
 
-    public function accessible($value)
-    {
-        return is_array($value) || $value instanceof \ArrayAccess;
-    }
-
     public function exists($array, $key)
     {
-        if ($array instanceof \ArrayAccess) {
-            return $array->offsetExists($key);
-        }
-
         return isset($array[$key]);
     }
 

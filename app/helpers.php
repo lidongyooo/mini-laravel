@@ -14,3 +14,16 @@ if ( !function_exists('env') ) {
         return $_ENV[$name] ?? $default;
     }
 }
+
+if ( !function_exists('config') ) {
+    function config($key, $default = null)
+    {
+        if (is_null($key)) {
+            return app('config');
+        }
+
+        return app('config')->get($key, $default);
+    }
+}
+
+
