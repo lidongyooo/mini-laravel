@@ -13,10 +13,13 @@ class Container
 
     protected static $instance;
 
-    public function __construct(protected $basePath = null)
+    public static function getContainer()
     {
-        $this->bindPathsInContainer();
-        $this->registerBaseBindings();
+        if (is_null(self::$instance)) {
+            static::$instance = new static(realpath(__DIR__.'/../'));
+        }
+
+        return static::$instance;
     }
 
     public function instance($abstract, $instance)
@@ -27,15 +30,6 @@ class Container
     public function getInstances()
     {
         return $this->instances;
-    }
-
-    public static function getContainer()
-    {
-        if (is_null(self::$instance)) {
-            self::$instance = new self(realpath(__DIR__.'/../'));
-        }
-
-        return self::$instance;
     }
 
     public function singleton($abstract, $concrete)
@@ -62,6 +56,17 @@ class Container
             return $this->instances[$abstract];
         }
 
+        if($this->isBuildable($abstract)){
+            $object = $this->build($abstract);
+        }else {
+            $object = $this->resolve($abstract);
+        }
+
+        return $object;
+    }
+
+    protected function resolve($abstract)
+    {
         $object = $this->bindings[$abstract]['concrete']($this);
 
         if ($this->bindings[$abstract]['share']) {
@@ -69,6 +74,15 @@ class Container
         }
 
         return $object;
+    }
+
+    public function isBuildable($abstract)
+    {
+        if (!isset($this->bindings[$abstract]) && class_exists($abstract)) {
+            return true;
+        }
+
+        return false;
     }
 
     protected function build($concrete)
@@ -111,19 +125,6 @@ class Container
         }
 
         return $this->make($type->getName());
-    }
-
-    protected function bindPathsInContainer()
-    {
-        $this->instance('path.base', $this->basePath);
-        $this->instance('path.app', $this->basePath.DIRECTORY_SEPARATOR.'app');
-    }
-
-    protected function registerBaseBindings()
-    {
-        self::$instance = $this;
-        $this->instance('app', $this);
-        $this->instance(Container::class, $this);
     }
 
     protected function dropStaleInstance($abstract)

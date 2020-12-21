@@ -1,6 +1,6 @@
 <?php
 
-use Mini\Foundation\container;
+use Mini\Foundation\Container;
 
 if ( !function_exists('app') ) {
     function app($abstract = ''){

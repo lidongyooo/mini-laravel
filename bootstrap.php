@@ -1,6 +1,6 @@
 <?php
 
-$app = new \Mini\Foundation\container(
+$app = new \Mini\Foundation\Application(
     realpath(__DIR__)
 );
 

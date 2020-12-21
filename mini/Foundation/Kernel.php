@@ -2,29 +2,42 @@
 
 namespace Mini\Foundation;
 
+use Mini\Foundation\Bootstrap\LoadEnvironmentVariables;
 use Mini\Interfaces\Foundation\KernelContact;
 
 class Kernel implements KernelContact
 {
 
-    public function __construct(protected Container $app)
+    protected $bootstrappers = [
+        LoadEnvironmentVariables::class
+    ];
+
+    public function __construct(protected Application $app)
     {
 
     }
 
+    public function handle($request)
+    {
+        $this->app->instance('request',$request);
+        $this->sendrequestThroughRouter();
+    }
+
+    public function sendRequestThroughRouter()
+    {
+        $this->bootstrap();
+    }
+
     public function bootstrap()
     {
-        // TODO: Implement bootstrap() method.
+        foreach ($this->bootstrappers as $bootstrapper) {
+            $this->app->make($bootstrapper)->bootstrap($this->app);
+        }
     }
 
     public function getApplication()
     {
         // TODO: Implement getApplication() method.
-    }
-
-    public function handle($request)
-    {
-//        unset($request);
     }
 
     public function terminate($request, $response)
