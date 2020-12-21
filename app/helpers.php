@@ -8,3 +8,9 @@ if ( !function_exists('app') ) {
         return $abstract ? $app->make($abstract) : $app;
     }
 }
+
+if ( !function_exists('env') ) {
+    function env($name, $default = ''){
+        return $_ENV[$name] ?? $default;
+    }
+}
