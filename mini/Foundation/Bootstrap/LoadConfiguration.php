@@ -6,6 +6,8 @@ use Mini\Foundation\Application;
 
 class LoadConfiguration
 {
+    protected $items = [];
+
     public function __construct(protected Application $app)
     {
     }
@@ -16,25 +18,62 @@ class LoadConfiguration
         $this->loadConfigurationFiles();
     }
 
-    protected function loadConfigurationFiles()
+    public function get()
     {
-        $files = $this->getConfigurationFiles();
+
     }
 
-    protected function getConfigurationFiles()
+    public function set($key, $value = null)
     {
-        $files = [];
+        $array = &$this->items;
+        $keys = explode('.', $key);
+
+        while (count($keys) > 1) {
+            $key = array_shift($keys);
+
+            if ( !$this->exists($this->item, $key) ) {
+                $array[$key] = [];
+            }
+
+            $array = &$array[$key];
+        }
+
+        $array[array_shift($keys)] = $value;
+    }
+
+    public function accessible($value)
+    {
+        return is_array($value) || $value instanceof \ArrayAccess;
+    }
+
+    public function exists($array, $key)
+    {
+        if ($array instanceof \ArrayAccess) {
+            return $array->offsetExists($key);
+        }
+
+        return isset($array[$key]);
+    }
+
+    protected function loadConfigurationFiles()
+    {
         $directory = $this->app->make('path.config');
 
         $paths = new \RecursiveDirectoryIterator($directory, \RecursiveDirectoryIterator::SKIP_DOTS);
         $folders = new \RecursiveIteratorIterator($paths);
         foreach ($folders as $file) {
             if ($file->getExtension() === 'php') {
-                $files[$this->getAlias($directory, $file)] = require_once $file->getRealPath();
+                $this->transformNormalValue($directory, $file);
             }
         }
+    }
 
-        return $files;
+    protected function transformNormalValue($directory, \SplFileInfo $file)
+    {
+        $alias = $this->getAlias($directory, $file);
+        $array = require_once $file->getRealPath();
+
+        $this->set($alias, $array);
     }
 
     protected function getAlias($directory, \SplFileInfo $file)
