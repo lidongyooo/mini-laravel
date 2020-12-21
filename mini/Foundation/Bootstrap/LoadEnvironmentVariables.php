@@ -9,9 +9,13 @@ class LoadEnvironmentVariables
 {
     protected $filePath;
 
-    public function bootstrap(Application $app)
+    public function __construct(protected Application $app)
     {
-        $this->filePath = $app->make('path.base').'/.env';
+    }
+
+    public function bootstrap()
+    {
+        $this->filePath = $this->app->make('path.base').DIRECTORY_SEPARATOR.'.env';
         $this->load();
     }
 

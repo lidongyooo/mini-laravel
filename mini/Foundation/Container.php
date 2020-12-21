@@ -16,7 +16,7 @@ class Container
     public static function getContainer()
     {
         if (is_null(self::$instance)) {
-            static::$instance = new static(realpath(__DIR__.'/../'));
+            static::$instance = new static(realpath(__DIR__.DIRECTORY_SEPARATOR.'../'));
         }
 
         return static::$instance;

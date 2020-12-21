@@ -15,6 +15,7 @@ class Application extends Container
     {
         $this->instance('path.base', $this->basePath);
         $this->instance('path.app', $this->basePath.DIRECTORY_SEPARATOR.'app');
+        $this->instance('path.config', $this->basePath.DIRECTORY_SEPARATOR.'config');
     }
 
     protected function registerBaseBindings()

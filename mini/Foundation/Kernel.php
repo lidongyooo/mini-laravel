@@ -2,6 +2,7 @@
 
 namespace Mini\Foundation;
 
+use Mini\Foundation\Bootstrap\LoadConfiguration;
 use Mini\Foundation\Bootstrap\LoadEnvironmentVariables;
 use Mini\Interfaces\Foundation\KernelContact;
 
@@ -9,7 +10,8 @@ class Kernel implements KernelContact
 {
 
     protected $bootstrappers = [
-        LoadEnvironmentVariables::class
+        LoadEnvironmentVariables::class,
+        LoadConfiguration::class
     ];
 
     public function __construct(protected Application $app)
@@ -31,7 +33,7 @@ class Kernel implements KernelContact
     public function bootstrap()
     {
         foreach ($this->bootstrappers as $bootstrapper) {
-            $this->app->make($bootstrapper)->bootstrap($this->app);
+            $this->app->make($bootstrapper)->bootstrap();
         }
     }
 
