@@ -1,10 +1,10 @@
 <?php
 
-use Mini\Foundation\Container;
+use Mini\Foundation\Application;
 
 if ( !function_exists('app') ) {
     function app($abstract = ''){
-        $app = Container::getContainer();
+        $app = Application::getContainer();
         return $abstract ? $app->make($abstract) : $app;
     }
 }
