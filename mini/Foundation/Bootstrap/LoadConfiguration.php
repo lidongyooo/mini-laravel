@@ -16,6 +16,9 @@ class LoadConfiguration
     {
         $this->app->instance('config', $this);
         $this->loadConfigurationFiles();
+
+        date_default_timezone_set($this->get('app.timezone', 'RPC'));
+        mb_internal_encoding('UTF-8');
     }
 
     public function get($key, $default = null)
