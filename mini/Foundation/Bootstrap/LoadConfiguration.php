@@ -17,7 +17,7 @@ class LoadConfiguration
         $this->app->instance('config', $this);
         $this->loadConfigurationFiles();
 
-        date_default_timezone_set($this->get('app.timezone', 'RPC'));
+        date_default_timezone_set($this->get('app.timezone', 'Asia/Shanghai'));
         mb_internal_encoding('UTF-8');
     }
 

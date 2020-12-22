@@ -2,6 +2,7 @@
 
 namespace Mini\Foundation;
 
+use Mini\Foundation\Bootstrap\HandleExceptions;
 use Mini\Foundation\Bootstrap\LoadConfiguration;
 use Mini\Foundation\Bootstrap\LoadEnvironmentVariables;
 use Mini\Interfaces\Foundation\KernelContact;
@@ -11,7 +12,8 @@ class Kernel implements KernelContact
 
     protected $bootstrappers = [
         LoadEnvironmentVariables::class,
-        LoadConfiguration::class
+        LoadConfiguration::class,
+        HandleExceptions::class
     ];
 
     public function __construct(protected Application $app)
