@@ -16,13 +16,9 @@ if ( !function_exists('env') ) {
 }
 
 if ( !function_exists('config') ) {
-    function config($key, $default = null)
+    function config($key = null, $default = null)
     {
-        if (is_null($key)) {
-            return app('config');
-        }
-
-        return app('config')->get($key, $default);
+        return is_null($key) ? app('config') : app('config')->get($key, $default);
     }
 }
 
