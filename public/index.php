@@ -10,5 +10,6 @@ $response = $kernel->handle(
     $request = \Mini\Foundation\Request::capture()
 );
 
+\DB::output();
 
 var_dump(config('aaa.bbb.ccc'));

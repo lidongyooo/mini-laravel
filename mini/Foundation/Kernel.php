@@ -5,6 +5,7 @@ namespace Mini\Foundation;
 use Mini\Foundation\Bootstrap\HandleExceptions;
 use Mini\Foundation\Bootstrap\LoadConfiguration;
 use Mini\Foundation\Bootstrap\LoadEnvironmentVariables;
+use Mini\Foundation\Bootstrap\RegisterFacades;
 use Mini\Interfaces\Foundation\KernelContact;
 
 class Kernel implements KernelContact
@@ -13,7 +14,8 @@ class Kernel implements KernelContact
     protected $bootstrappers = [
         LoadEnvironmentVariables::class,
         LoadConfiguration::class,
-        HandleExceptions::class
+        HandleExceptions::class,
+        RegisterFacades::class
     ];
 
     public function __construct(protected Application $app)
@@ -24,7 +26,7 @@ class Kernel implements KernelContact
     public function handle($request)
     {
         $this->app->instance('request',$request);
-        $this->sendrequestThroughRouter();
+        $this->sendRequestThroughRouter();
     }
 
     public function sendRequestThroughRouter()
@@ -35,13 +37,13 @@ class Kernel implements KernelContact
     public function bootstrap()
     {
         foreach ($this->bootstrappers as $bootstrapper) {
-            $this->app->make($bootstrapper)->bootstrap();
+            $this->app->make($bootstrapper)->bootstrap($this->app);
         }
     }
 
     public function getApplication()
     {
-        // TODO: Implement getApplication() method.
+        return $this->app;
     }
 
     public function terminate($request, $response)
