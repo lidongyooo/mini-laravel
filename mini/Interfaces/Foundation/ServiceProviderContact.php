@@ -2,7 +2,7 @@
 
 namespace Mini\Interfaces\Foundation;
 
-interface ServiceProviderContact
+interface ServiceProviderContrack
 {
     public function register();
 }

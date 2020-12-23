@@ -2,9 +2,9 @@
 
 namespace Mini\Foundation;
 
-use Mini\Interfaces\Foundation\ServiceProviderContact;
+use Mini\Interfaces\Foundation\ServiceProviderContrack;
 
-class ServiceProvider implements ServiceProviderContact
+class ServiceProvider implements ServiceProviderContrack
 {
     public $bindings = [];
     public $singletons = [];

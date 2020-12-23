@@ -2,7 +2,7 @@
 
 namespace Mini\Interfaces\Foundation;
 
-interface KernelContact
+interface KernelContrack
 {
     /**
      * Bootstrap the application for HTTP requests.

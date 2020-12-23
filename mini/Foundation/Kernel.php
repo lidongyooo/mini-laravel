@@ -7,9 +7,9 @@ use Mini\Foundation\Bootstrap\LoadConfiguration;
 use Mini\Foundation\Bootstrap\LoadEnvironmentVariables;
 use Mini\Foundation\Bootstrap\RegisterFacades;
 use Mini\Foundation\Bootstrap\RegisterProviders;
-use Mini\Interfaces\Foundation\KernelContact;
+use Mini\Interfaces\Foundation\KernelContrack;
 
-class Kernel implements KernelContact
+class Kernel implements KernelContrack
 {
 
     protected $bootstrappers = [
