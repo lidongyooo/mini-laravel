@@ -6,6 +6,7 @@ use Mini\Foundation\Bootstrap\HandleExceptions;
 use Mini\Foundation\Bootstrap\LoadConfiguration;
 use Mini\Foundation\Bootstrap\LoadEnvironmentVariables;
 use Mini\Foundation\Bootstrap\RegisterFacades;
+use Mini\Foundation\Bootstrap\RegisterProviders;
 use Mini\Interfaces\Foundation\KernelContact;
 
 class Kernel implements KernelContact
@@ -15,7 +16,8 @@ class Kernel implements KernelContact
         LoadEnvironmentVariables::class,
         LoadConfiguration::class,
         HandleExceptions::class,
-        RegisterFacades::class
+        RegisterFacades::class,
+        RegisterProviders::class
     ];
 
     public function __construct(protected Application $app)

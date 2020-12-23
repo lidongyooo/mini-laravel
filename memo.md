@@ -6,4 +6,5 @@
   - https://www.php.net/manual/zh/function.str-starts-with.php
 - **str_contains()    #新增函数**
   - https://www.php.net/manual/en/function.str-contains.php
-
+- **$object::class    #新增语法**
+  - https://wiki.php.net/rfc/class_name_literal_on_object
