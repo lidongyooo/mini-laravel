@@ -2,6 +2,7 @@
 
 namespace Mini\Foundation;
 
+use Mini\Foundation\Bootstrap\BootProviders;
 use Mini\Foundation\Bootstrap\HandleExceptions;
 use Mini\Foundation\Bootstrap\LoadConfiguration;
 use Mini\Foundation\Bootstrap\LoadEnvironmentVariables;
@@ -17,7 +18,8 @@ class Kernel implements KernelContrack
         LoadConfiguration::class,
         HandleExceptions::class,
         RegisterFacades::class,
-        RegisterProviders::class
+        RegisterProviders::class,
+        BootProviders::class
     ];
 
     public function __construct(protected Application $app)

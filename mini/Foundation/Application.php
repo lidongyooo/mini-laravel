@@ -23,6 +23,15 @@ class Application extends Container
         }
     }
 
+    public function boot()
+    {
+        foreach ($this->serviceProviders as $provider) {
+            if (method_exists($provider, 'boot')) {
+                call_user_func([$provider, 'boot']);
+            }
+        }
+    }
+
     protected function resolveProvider($provider)
     {
         $provider = new $provider($this);

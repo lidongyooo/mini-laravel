@@ -11,6 +11,11 @@ class DB extends ServiceProvider
         exit('success');
     }
 
+    public function boot()
+    {
+        //do something
+    }
+
     public function register()
     {
         $this->app->singleton('db', function(){
