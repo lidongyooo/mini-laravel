@@ -9,9 +9,12 @@ use Mini\Foundation\Bootstrap\LoadEnvironmentVariables;
 use Mini\Foundation\Bootstrap\RegisterFacades;
 use Mini\Foundation\Bootstrap\RegisterProviders;
 use Mini\Interfaces\Foundation\KernelContrack;
+use Mini\Middleware\First;
 
 class Kernel implements KernelContrack
 {
+
+    protected $middleware = [];
 
     protected $bootstrappers = [
         LoadEnvironmentVariables::class,
@@ -29,13 +32,20 @@ class Kernel implements KernelContrack
 
     public function handle($request)
     {
-        $this->app->instance('request',$request);
-        $this->sendRequestThroughRouter();
+        return $this->sendRequestThroughRouter($request);
     }
 
-    public function sendRequestThroughRouter()
+    public function sendRequestThroughRouter($request)
     {
+        $this->app->instance('request',$request);
+
         $this->bootstrap();
+
+        return (new Pipeline($this->app))
+                    ->send($request)
+                    ->through($this->middleware)
+                    ->then($this->dispatchToRouter());
+
     }
 
     public function bootstrap()
@@ -52,6 +62,13 @@ class Kernel implements KernelContrack
 
     public function terminate($request, $response)
     {
-        // TODO: Implement terminate() method.
+
+    }
+
+    protected function dispatchToRouter()
+    {
+        return function ($request) {
+
+        };
     }
 }
