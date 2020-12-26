@@ -1,15 +1,15 @@
 <?php
 
-namespace Mini\Middleware;
+namespace App\Http\Middleware;
 
 use Mini\Foundation\Request;
 use Mini\Interfaces\Middleware\MiddlewareContrack;
 
-class First implements MiddlewareContrack
+class MyMiddleware implements MiddlewareContrack
 {
     public function handle(Request $request, \Closure $next)
     {
-        echo 'first middleware'.PHP_EOL;
+        echo '自定义中间件'.PHP_EOL;
         return $next($request);
     }
 }
