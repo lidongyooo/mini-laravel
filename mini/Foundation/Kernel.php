@@ -68,7 +68,7 @@ class Kernel implements KernelContrack
     protected function dispatchToRouter()
     {
         return function ($request) {
-
+            return 'I did it';
         };
     }
 }

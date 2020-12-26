@@ -10,6 +10,6 @@ class Second implements MiddlewareContrack
     public function handle(Request $request, \Closure $next)
     {
         echo 'second middleware'.PHP_EOL;
-        $next($request);
+        return $next($request);
     }
 }
