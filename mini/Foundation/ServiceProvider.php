@@ -18,4 +18,10 @@ class ServiceProvider implements ServiceProviderContrack
     {
 
     }
+
+    public function boot()
+    {
+
+    }
+
 }

@@ -68,7 +68,7 @@ class LoadEnvironmentVariables
 
     protected function normaliseEnvironmentVariable($line)
     {
-        $explode = explode('=',$line);
+        $explode = explode('=', $line);
         return [$explode[0], $explode[1] ?? ''];
     }
 }
