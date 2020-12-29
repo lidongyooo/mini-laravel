@@ -4,9 +4,12 @@ namespace Mini\Routing;
 
 class Router
 {
+    protected $routeCollection = [];
 
-    public function output()
+    protected $groupStack = [];
+
+    public function get()
     {
-        exit('I did it!');
+
     }
 }
