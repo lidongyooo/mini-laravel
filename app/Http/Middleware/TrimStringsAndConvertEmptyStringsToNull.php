@@ -1,6 +1,6 @@
 <?php
 
-namespace Mini\Middleware;
+namespace App\Http\Middleware;
 
 use Mini\Foundation\Request;
 use Mini\Interfaces\Middleware\MiddlewareContract;
