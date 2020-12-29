@@ -4,9 +4,9 @@ namespace Mini\Middleware;
 
 use Mini\Exceptions\Middleware\PostTooLargeException;
 use Mini\Foundation\Request;
-use Mini\Interfaces\Middleware\MiddlewareContrack;
+use Mini\Interfaces\Middleware\MiddlewareContract;
 
-class ValidatePostSize implements MiddlewareContrack
+class ValidatePostSize implements MiddlewareContract
 {
 
     public function handle(Request $request, \Closure $next)

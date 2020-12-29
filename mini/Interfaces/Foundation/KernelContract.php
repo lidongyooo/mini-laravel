@@ -2,7 +2,7 @@
 
 namespace Mini\Interfaces\Foundation;
 
-interface KernelContrack
+interface KernelContract
 {
 
     public function bootstrap();

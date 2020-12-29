@@ -4,7 +4,7 @@ namespace Mini\Interfaces\Middleware;
 
 use Mini\Foundation\Request;
 
-interface MiddlewareContrack
+interface MiddlewareContract
 {
     public function handle(Request $request, \Closure $next);
 }

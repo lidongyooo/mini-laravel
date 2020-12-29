@@ -3,9 +3,9 @@
 namespace App\Http\Middleware;
 
 use Mini\Foundation\Request;
-use Mini\Interfaces\Middleware\MiddlewareContrack;
+use Mini\Interfaces\Middleware\MiddlewareContract;
 
-class MyMiddleware implements MiddlewareContrack
+class MyMiddleware implements MiddlewareContract
 {
     public function handle(Request $request, \Closure $next)
     {

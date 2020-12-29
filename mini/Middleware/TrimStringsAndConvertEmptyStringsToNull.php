@@ -3,9 +3,9 @@
 namespace Mini\Middleware;
 
 use Mini\Foundation\Request;
-use Mini\Interfaces\Middleware\MiddlewareContrack;
+use Mini\Interfaces\Middleware\MiddlewareContract;
 
-class TrimStringsAndConvertEmptyStringsToNull implements MiddlewareContrack
+class TrimStringsAndConvertEmptyStringsToNull implements MiddlewareContract
 {
     protected $except = [
         'password',

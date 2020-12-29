@@ -8,10 +8,10 @@ use Mini\Foundation\Bootstrap\LoadConfiguration;
 use Mini\Foundation\Bootstrap\LoadEnvironmentVariables;
 use Mini\Foundation\Bootstrap\RegisterFacades;
 use Mini\Foundation\Bootstrap\RegisterProviders;
-use Mini\Interfaces\Foundation\KernelContrack;
+use Mini\Interfaces\Foundation\KernelContract;
 use Mini\Routing\Router;
 
-class Kernel implements KernelContrack
+class Kernel implements KernelContract
 {
 
     protected $middleware = [];
