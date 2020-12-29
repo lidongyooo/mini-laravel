@@ -11,6 +11,8 @@ class Container
 
     protected $instances = [];
 
+    protected $aliases = [];
+
     protected static $instance;
 
     public static function getContainer()
@@ -52,6 +54,8 @@ class Container
 
     public function make($abstract)
     {
+        $abstract = $this->getAlias($abstract);
+
         if (isset($this->instances[$abstract])) {
             return $this->instances[$abstract];
         }
@@ -65,6 +69,25 @@ class Container
         return $object;
     }
 
+    public function isBuildable($abstract)
+    {
+        if (!isset($this->bindings[$abstract]) && class_exists($abstract)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getAlias($abstract)
+    {
+        return isset($this->aliases[$abstract]) ? $this->getAlias($this->aliases[$abstract]) : $abstract;
+    }
+
+    public function alias($abstract, $alias)
+    {
+        $this->aliases[$alias] = $abstract;
+    }
+
     protected function resolve($abstract)
     {
         $object = $this->bindings[$abstract]['concrete']($this);
@@ -74,15 +97,6 @@ class Container
         }
 
         return $object;
-    }
-
-    public function isBuildable($abstract)
-    {
-        if (!isset($this->bindings[$abstract]) && class_exists($abstract)) {
-            return true;
-        }
-
-        return false;
     }
 
     protected function build($concrete)

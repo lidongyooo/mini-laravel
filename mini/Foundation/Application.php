@@ -2,6 +2,9 @@
 
 namespace Mini\Foundation;
 
+use App\Providers\RouteServiceProvider;
+use Mini\Routing\Router;
+
 class Application extends Container
 {
     protected $serviceProviders = [];
@@ -11,6 +14,8 @@ class Application extends Container
     {
         $this->bindPathsInContainer();
         $this->registerBaseBindings();
+        $this->registerBaseServiceProviders();
+        $this->registerCoreContainerAliases();
     }
 
     public function registerServiceProviders(array $providers)
@@ -19,7 +24,7 @@ class Application extends Container
             if (isset($this->loadedProviders[$provider])) {
                 continue;
             }
-            $this->resolveProvider($provider);
+            $this->registerProvider($provider);
         }
     }
 
@@ -32,7 +37,7 @@ class Application extends Container
         }
     }
 
-    protected function resolveProvider($provider)
+    protected function registerProvider($provider)
     {
         $provider = new $provider($this);
         $provider->register();
@@ -64,5 +69,19 @@ class Application extends Container
         self::$instance = $this;
         $this->instance('app', $this);
         $this->instance(Application::class, $this);
+    }
+
+    protected function registerBaseServiceProviders()
+    {
+        $this->registerProvider(RouteServiceProvider::class);
+    }
+
+    protected function registerCoreContainerAliases()
+    {
+        foreach ([
+            'router' => Router::class
+        ] as $key => $alias) {
+            $this->alias($key, $alias);
+        }
     }
 }

@@ -9,7 +9,7 @@ use Mini\Foundation\Bootstrap\LoadEnvironmentVariables;
 use Mini\Foundation\Bootstrap\RegisterFacades;
 use Mini\Foundation\Bootstrap\RegisterProviders;
 use Mini\Interfaces\Foundation\KernelContrack;
-use Mini\Middleware\First;
+use Mini\Routing\Router;
 
 class Kernel implements KernelContrack
 {
@@ -25,7 +25,7 @@ class Kernel implements KernelContrack
         BootProviders::class
     ];
 
-    public function __construct(protected Application $app)
+    public function __construct(protected Application $app, protected Router $router)
     {
 
     }
