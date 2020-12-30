@@ -7,6 +7,8 @@ use Mini\Routing\Router;
 
 class RouteServiceProvider extends ServiceProvider
 {
+     protected $namespace = 'App\\Http\\Controllers';
+
     public function register()
     {
         $this->app->singleton('router', Router::class);
@@ -14,6 +16,7 @@ class RouteServiceProvider extends ServiceProvider
 
     public function boot()
     {
-
+        \Route::namespace($this->namespace)
+            ->group(app('path.base').DIRECTORY_SEPARATOR.'routes/api.php');
     }
 }

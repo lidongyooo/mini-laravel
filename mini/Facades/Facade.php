@@ -29,7 +29,6 @@ abstract class Facade
         return static::$resolvedInstance[$name] = static::$app->make($name);
     }
 
-
     public static function __callStatic($method, $arguments)
     {
         $instance = static::getFacadeRoot();
