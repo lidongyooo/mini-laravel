@@ -37,7 +37,7 @@ class Kernel implements KernelContract
 
     public function sendRequestThroughRouter($request)
     {
-        $this->app->instance('request',$request);
+        $this->app->instance('request', $request);
 
         $this->bootstrap();
 
@@ -68,7 +68,7 @@ class Kernel implements KernelContract
     protected function dispatchToRouter()
     {
         return function ($request) {
-            return 'I did it';
+            $this->router->dispatch($request);
         };
     }
 }

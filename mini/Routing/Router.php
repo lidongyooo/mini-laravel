@@ -3,6 +3,7 @@
 namespace Mini\Routing;
 
 use Mini\Foundation\Application;
+use Mini\Foundation\Request;
 
 class Router
 {
@@ -12,6 +13,10 @@ class Router
         'get', 'post', 'put', 'patch', 'delete'
     ];
 
+    protected $currentRequest;
+
+    protected $currentRoute;
+
     public function __construct(protected RouteCollection $routes, protected Application $app)
     {
 
@@ -19,6 +24,7 @@ class Router
 
     public function addRoute($method, $uri, $action)
     {
+        $method = strtoupper($method);
         $this->routes->add($this->createRoute($method, $uri, $action));
     }
 
@@ -60,6 +66,28 @@ class Router
         $this->updateGroupStack($attributes);
         $this->loadRoutes($routes);
         array_pop($this->groupStack);
+    }
+
+    public function dispatch(Request $request)
+    {
+        $this->currentRequest = $request;
+        return $this->dispatchToRoute($request);
+    }
+
+    protected function dispatchToRoute(Request $request)
+    {
+        return $this->runRoute($request, $this->findRoute($request));
+    }
+
+    protected function runRoute(Request $request, Route $route)
+    {
+
+    }
+
+    protected function findRoute(Request $request)
+    {
+        $this->currentRoute = $route = $this->routes->match($request);
+        $this->app->instance(Route::class, $route);
     }
 
     protected function updateGroupStack(array $attributes)
