@@ -79,7 +79,8 @@ class Application extends Container
     protected function registerCoreContainerAliases()
     {
         foreach ([
-            'router' => Router::class
+            'router' => Router::class,
+            'request' => Request::class
         ] as $key => $alias) {
             $this->alias($key, $alias);
         }

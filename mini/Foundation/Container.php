@@ -88,6 +88,12 @@ class Container
         $this->aliases[$alias] = $abstract;
     }
 
+    public function buildMethod(\ReflectionFunctionAbstract $reflector)
+    {
+        $dependencies = $reflector->getParameters();
+        return $this->getDependencies($dependencies);
+    }
+
     protected function resolve($abstract)
     {
         $object = $this->bindings[$abstract]['concrete']($this);

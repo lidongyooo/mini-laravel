@@ -20,7 +20,8 @@ class Route
     protected function parseAction($action)
     {
         if ($action instanceof \Closure) {
-            return $action;
+            $this->action = [];
+            $this->action['uses'] = $action;
         }
 
         if (is_string($action)) {
@@ -70,7 +71,51 @@ class Route
 
     public function run()
     {
-        // do something
+        if ($this->isControllerAction()) {
+            return $this->runController();
+        }
+
+        return $this->runCallable();
+    }
+
+    protected function runCallable()
+    {
+        $callable = $this->action['uses'];
+        $parameters = $this->app->buildMethod(new \ReflectionFunction($callable));
+        return $callable(...array_values($parameters));
+    }
+
+    protected function runController()
+    {
+        $controller = $this->getController();
+        $method = $this->getControllerMethod();
+
+        $parameters = $this->app->buildMethod(new \ReflectionMethod($controller, $method));
+
+        return $controller->$method(...array_values($parameters));
+    }
+
+    protected function getController()
+    {
+        $class = explode('@', $this->action['uses'])[0];
+
+        $class = str_starts_with($class, $this->namespace) ? $class : $this->namespace.'\\'.$class;
+
+        if (class_exists($class)) {
+            return $this->app->make($class);
+        }
+
+        throw new \RuntimeException("The $class was not found");
+    }
+
+    protected function getControllerMethod()
+    {
+        return  explode('@', $this->action['uses'])[1];
+    }
+
+    protected function isControllerAction()
+    {
+        return is_string($this->action['uses']);
     }
 
     public function setRouter(Router $router)

@@ -10,7 +10,5 @@ $response = $kernel->handle(
     $request = \Mini\Foundation\Request::capture()
 );
 
-var_dump(\Route::getRoutes());
-
-//\Route::output();
+var_dump($response);
 

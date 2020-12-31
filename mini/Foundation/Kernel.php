@@ -68,7 +68,7 @@ class Kernel implements KernelContract
     protected function dispatchToRouter()
     {
         return function ($request) {
-            $this->router->dispatch($request);
+            return $this->router->dispatch($request);
         };
     }
 }

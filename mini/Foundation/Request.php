@@ -23,7 +23,7 @@ class Request
 
     public static function capture()
     {
-        return new self($_GET, $_POST, $_COOKIE, $_FILES, $_SERVER);
+        return new static($_GET, $_POST, $_COOKIE, $_FILES, $_SERVER);
     }
 
     public function got($property, $key = null, $default = null)

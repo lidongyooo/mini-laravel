@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Mini\Foundation\Request;
+
 class TestController extends Controller
 {
-    public function output()
+    public function output(Request $request)
     {
-        echo 'I did it'.PHP_EOL;
+        return 'I did it'.PHP_EOL;
     }
 }

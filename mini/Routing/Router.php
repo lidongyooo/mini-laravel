@@ -34,12 +34,10 @@ class Router
         if ($this->hasGroupStack()) {
             $this->mergeGroupAttributesIntoRoute($route);
         }
-        return $route;
-    }
 
-    public function getRoutes()
-    {
-        return $this->routes->getRoutes();
+        $route->setUri($uri[0] === '/' ? substr($uri, 1) : $uri);
+
+        return $route;
     }
 
     protected function mergeGroupAttributesIntoRoute(Route $route)
@@ -81,13 +79,16 @@ class Router
 
     protected function runRoute(Request $request, Route $route)
     {
-
+        return $route->run();
     }
 
     protected function findRoute(Request $request)
     {
         $this->currentRoute = $route = $this->routes->match($request);
+
         $this->app->instance(Route::class, $route);
+
+        return $route;
     }
 
     protected function updateGroupStack(array $attributes)

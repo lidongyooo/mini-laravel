@@ -8,3 +8,7 @@ Route::prefix("admin")
                 Route::post('add', 'OrderController@add');
             });
     });
+
+Route::get('/', function(){
+    return 'hello world';
+});

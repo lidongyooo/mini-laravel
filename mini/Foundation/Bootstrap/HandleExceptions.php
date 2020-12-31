@@ -34,6 +34,7 @@ class HandleExceptions
 
     public function handleException(\Throwable $e)
     {
+        http_response_code($e->getCode());
         die(sprintf("Captured Throwable: %s in %s on line %s", $e->getMessage(), $e->getFile(), $e->getLine()));
     }
 

@@ -28,6 +28,7 @@ class ValidatePostSize implements MiddlewareContract
 
         $metric = strtoupper(substr($postMaxSize, -1));
         $postMaxSize = (int)$postMaxSize;
+
         switch ($metric) {
             case 'K':
                 return $postMaxSize * 1024;
@@ -38,5 +39,6 @@ class ValidatePostSize implements MiddlewareContract
             default:
                 return $postMaxSize;
         }
+
     }
 }
