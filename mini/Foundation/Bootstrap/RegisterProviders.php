@@ -8,6 +8,6 @@ class RegisterProviders
 {
     public function bootstrap(Application $app)
     {
-        $app->registerServiceProviders($app->make('config')->get('app.providers'));
+        $app->registerServiceProviders(config('app.providers'));
     }
 }

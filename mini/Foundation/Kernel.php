@@ -27,7 +27,7 @@ class Kernel implements KernelContract
 
     public function __construct(protected Application $app, protected Router $router)
     {
-
+        $this->router->syncMiddleware($this->routeMiddleware);
     }
 
     public function handle($request)

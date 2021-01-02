@@ -12,6 +12,8 @@ class Route
 
     protected $namespace = '';
 
+    protected $middleware = [];
+
     public function __construct(protected $method, protected $uri, protected $action)
     {
         $this->parseAction($this->action);
@@ -21,14 +23,13 @@ class Route
     {
         if ($action instanceof \Closure) {
             $this->action = [];
-            $this->action['uses'] = $action;
         }
 
         if (is_string($action)) {
             $this->action = explode('@', $action);
         }
 
-        if (is_array($action)) {
+        if (is_array($action) && $action) {
             $action = $action[0].'@'.$action[1];
         }
 
@@ -59,6 +60,17 @@ class Route
     public function setUri($uri)
     {
         $this->uri = $uri;
+        return $this;
+    }
+
+    public function getMiddleware()
+    {
+        return $this->middleware;
+    }
+
+    public function setMiddleware($middleware)
+    {
+        $this->middleware = $middleware;
         return $this;
     }
 
@@ -105,7 +117,7 @@ class Route
             return $this->app->make($class);
         }
 
-        throw new \RuntimeException("The $class was not found");
+        throw new \RuntimeException("The class::$class was not found");
     }
 
     protected function getControllerMethod()

@@ -31,4 +31,13 @@ if ( !function_exists('request') ) {
     }
 }
 
+if ( !function_exists('route') ) {
+    function route()
+    {
+        return app()->make(\Mini\Routing\Route::class);
+    }
+}
+
+
+
 

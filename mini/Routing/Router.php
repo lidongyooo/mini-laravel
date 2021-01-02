@@ -3,6 +3,7 @@
 namespace Mini\Routing;
 
 use Mini\Foundation\Application;
+use Mini\Foundation\Pipeline;
 use Mini\Foundation\Request;
 
 class Router
@@ -43,9 +44,12 @@ class Router
     protected function mergeGroupAttributesIntoRoute(Route $route)
     {
         $attributes = end($this->groupStack);
+
         $uri = isset($attributes['prefix']) ? trim($attributes['prefix'], '/').'/'.trim($route->getUri(), '/') : $route->getUri();
+
         $namespace = isset($attributes['namespace']) ? trim($attributes['namespace'], '\\') : '';
-        $route->setUri($uri)->setNamespace($namespace);
+
+        $route->setUri($uri)->setNamespace($namespace)->setMiddleware($attributes['middleware'] ?? []);
     }
 
     protected function hasGroupStack()
@@ -72,6 +76,11 @@ class Router
         return $this->dispatchToRoute($request);
     }
 
+    public function syncMiddleware($middleware)
+    {
+        $this->middleware = $middleware;
+    }
+
     protected function dispatchToRoute(Request $request)
     {
         return $this->runRoute($request, $this->findRoute($request));
@@ -79,14 +88,38 @@ class Router
 
     protected function runRoute(Request $request, Route $route)
     {
-        return $route->run();
+        return $this->runRouteWithinStack($request, $route);
+    }
+
+    protected function runRouteWithinStack(Request $request, Route $route)
+    {
+        return (new Pipeline($this->app))
+                    ->send($request)
+                    ->through($this->gatherRouteMiddleware($route))
+                    ->then(function ($request) use ($route) {
+                        return $route->run();
+                    });
+    }
+
+    protected function gatherRouteMiddleware(Route $route)
+    {
+        $middleware = [];
+        foreach ($route->getMiddleware() as $key) {
+            $middleware[] = $this->middlewareExists($this->middleware[$key] ?? $key);
+        }
+        return $middleware;
+    }
+
+    protected function middlewareExists($middleware)
+    {
+        return class_exists($middleware) ? $middleware : throw new \RuntimeException("The middleware::$middleware was not found");;
     }
 
     protected function findRoute(Request $request)
     {
         $this->currentRoute = $route = $this->routes->match($request);
 
-        $this->app->instance(Route::class, $route);
+        $this->app->instance('route', $route);
 
         return $route;
     }

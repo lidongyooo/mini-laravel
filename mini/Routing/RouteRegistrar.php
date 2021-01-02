@@ -41,7 +41,7 @@ class RouteRegistrar
         }
 
         if (in_array($method, $this->allowedAttributes)) {
-            return $this->attribute($method, $arguments[0]);
+            return $method === 'middleware' ? $this->attribute($method, is_array($arguments[0]) ? $arguments[0] : $arguments) : $this->attribute($method, $arguments[0]);
         }
 
         throw new \BadMethodCallException('Call to undefined method '. $this::class .'::'.$method);

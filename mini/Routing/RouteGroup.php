@@ -10,6 +10,7 @@ class RouteGroup
         $new = [
             'namespace' => static::formatNamespace($new, $old),
             'prefix' => static::formatPrefix($new, $old),
+            'middleware' => static::formatMiddleware($new, $old)
         ];
 
         return $new;
@@ -31,6 +32,13 @@ class RouteGroup
         $old = $old['prefix'] ?? null;
 
         return isset($new['prefix']) ? trim($old, '/').'/'.trim($new['prefix'], '/') : $old;
+    }
+
+    protected static function formatMiddleware($new, $old)
+    {
+        $old = $old['middleware'] ?? [];
+
+        return isset($new['middleware']) ? array_merge($old, $new['middleware']) : $old;
     }
 
 }

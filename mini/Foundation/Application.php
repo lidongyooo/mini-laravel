@@ -3,6 +3,7 @@
 namespace Mini\Foundation;
 
 use App\Providers\RouteServiceProvider;
+use Mini\Routing\Route;
 use Mini\Routing\Router;
 
 class Application extends Container
@@ -79,8 +80,9 @@ class Application extends Container
     protected function registerCoreContainerAliases()
     {
         foreach ([
-            'router' => Router::class,
-            'request' => Request::class
+            'router'        => Router::class,
+            'request'       => Request::class,
+            'route'         => Route::class
         ] as $key => $alias) {
             $this->alias($key, $alias);
         }
