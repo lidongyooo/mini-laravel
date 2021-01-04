@@ -112,7 +112,7 @@ class Router
 
     protected function middlewareExists($middleware)
     {
-        return class_exists($middleware) ? $middleware : throw new \RuntimeException("The middleware::$middleware was not found");;
+        return class_exists($middleware) && (in_array($middleware, $this->middleware) || isset($this->middleware[$middleware])) ? $middleware : throw new \RuntimeException("The middleware::$middleware was not found");;
     }
 
     protected function findRoute(Request $request)

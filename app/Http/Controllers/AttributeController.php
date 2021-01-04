@@ -10,6 +10,7 @@ use Mini\Routing\Attributes\Delete;
 use Mini\Routing\Attributes\Prefix;
 use Mini\Routing\Attributes\Middleware;
 use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\Attribute;
 
 #[
     Prefix('attribute'),
