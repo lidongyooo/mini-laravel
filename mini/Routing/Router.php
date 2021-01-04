@@ -26,7 +26,7 @@ class Router
     public function addRoute($method, $uri, $action)
     {
         $method = strtoupper($method);
-        $this->routes->add($this->createRoute($method, $uri, $action));
+        return $this->routes->add($this->createRoute($method, $uri, $action));
     }
 
     protected function createRoute($method, $uri, $action)

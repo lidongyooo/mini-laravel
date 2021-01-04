@@ -62,6 +62,7 @@ class Application extends Container
     {
         $this->instance('path.base', $this->basePath);
         $this->instance('path.app', $this->basePath.DIRECTORY_SEPARATOR.'app');
+        $this->instance('path.controllers', $this->make('path.app').DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers');
         $this->instance('path.config', $this->basePath.DIRECTORY_SEPARATOR.'config');
     }
 

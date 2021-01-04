@@ -71,9 +71,9 @@ class LoadConfiguration
     {
         $directory = $this->app->make('path.config');
 
-        $paths = new \RecursiveDirectoryIterator($directory, \RecursiveDirectoryIterator::SKIP_DOTS);
-        $folders = new \RecursiveIteratorIterator($paths);
-        foreach ($folders as $file) {
+        $folders = new \RecursiveDirectoryIterator($directory, \RecursiveDirectoryIterator::SKIP_DOTS);
+        $files = new \RecursiveIteratorIterator($folders);
+        foreach ($files as $file) {
             if ($file->getExtension() === 'php') {
                 $this->transformNormalValue($directory, $file);
             }

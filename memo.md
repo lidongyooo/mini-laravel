@@ -1,7 +1,5 @@
 - **Constructor property promotion    #新增特性**   构造属性提升
   - https://www.php.net/manual/en/language.oop5.decon.php#language.oop5.decon.constructor.promotion
-- **The ReflectionType Class    #代替  \ReflectionParameter->getClass() （非PHP8新增类）**
-  - https://www.php.net/manual/zh/class.reflectiontype.php#class.reflectiontype
 - **str_starts_with()    #新增函数**
   - https://www.php.net/manual/zh/function.str-starts-with.php
 - **str_contains()    #新增函数**
@@ -10,3 +8,9 @@
   - https://wiki.php.net/rfc/class_name_literal_on_object
 - **throw expression    #新增语法**
   - https://wiki.php.net/rfc/throw_expression
+- **Attributes(注解)    #新增特性**
+  - https://www.laruence.com/2020/06/12/5902.html
+  - https://stitcher.io/blog/attributes-in-php-8
+- **The ReflectionType Class    #代替  \ReflectionParameter->getClass() （非PHP8新增类）**
+  - https://www.php.net/manual/zh/class.reflectiontype.php#class.reflectiontype
+

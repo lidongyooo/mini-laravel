@@ -11,6 +11,3 @@ $response = $kernel->handle(
 );
 
 var_dump($response);
-
-//var_dump($response);
-

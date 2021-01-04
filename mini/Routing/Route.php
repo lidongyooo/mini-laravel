@@ -65,7 +65,7 @@ class Route
 
     public function getMiddleware()
     {
-        return $this->middleware;
+        return array_unique($this->middleware);
     }
 
     public function setMiddleware($middleware)

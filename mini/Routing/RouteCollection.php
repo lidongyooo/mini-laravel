@@ -14,6 +14,8 @@ class RouteCollection
     {
         $this->routes[$route->getMethod()][$route->getMethod().$route->getUri()] = $route;
         $this->allRoutes[$route->getMethod().$route->getUri()] = $route;
+
+        return $route;
     }
 
     public function match(Request $request)

@@ -7,6 +7,7 @@ return [
     ],
     'providers' => [
         \Mini\Database\DB::class,
-        \App\Providers\RouteServiceProvider::class
+        \App\Providers\RouteServiceProvider::class,
+        \Mini\Routing\Attributes\RouteAttributesServiceProvider::class
     ]
 ];
