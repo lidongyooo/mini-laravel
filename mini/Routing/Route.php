@@ -12,6 +12,8 @@ class Route
 
     protected $namespace = '';
 
+    protected $prefix = '';
+
     protected $middleware = [];
 
     public function __construct(protected $method, protected $uri, protected $action)
@@ -54,12 +56,13 @@ class Route
 
     public function getUri()
     {
-        return $this->uri;
+        return $this->prefix ? $this->prefix. '/' . trim($this->uri, '/') : trim($this->uri, '/');
     }
 
-    public function setUri($uri)
+    public function prefix($prefix)
     {
-        $this->uri = $uri;
+        $this->prefix .= $this->prefix ? '/' . trim($prefix, '/') : trim($prefix, '/');
+
         return $this;
     }
 
@@ -68,16 +71,20 @@ class Route
         return array_unique($this->middleware);
     }
 
-    public function setMiddleware($middleware)
+    public function middleware($middleware)
     {
-        $this->middleware = $middleware;
+        if (is_array($middleware)) {
+            $this->middleware =  array_merge($this->middleware, $middleware);
+        } else if (is_string($middleware)) {
+            $this->middleware =  array_merge($this->middleware, explode(',', $middleware));
+        }
+
         return $this;
     }
 
-    public function setNamespace($namespace)
+    public function namespace($namespace)
     {
-        $this->namespace = $namespace;
-
+        $this->namespace .= $this->namespace ? '\\'.trim($namespace,'\\') : trim($namespace,'\\');
         return $this;
     }
 

@@ -63,7 +63,7 @@ class RouteRegistrar
         $middleware = array_merge($classRouteAttributes->middleware(), $attributeClass->middleware);
 
         $httpMethod = $attributeClass->method;
-        $this->router->$httpMethod($attributeClass->uri, [$reflectionClass->getName(), $reflectionMethod->getName()])->setMiddleware($middleware);
+        $this->router->$httpMethod($attributeClass->uri, [$reflectionClass->getName(), $reflectionMethod->getName()])->middleware($middleware);
 
     }
 

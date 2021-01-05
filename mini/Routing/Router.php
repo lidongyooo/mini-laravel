@@ -36,8 +36,6 @@ class Router
             $this->mergeGroupAttributesIntoRoute($route);
         }
 
-        $route->setUri($uri[0] === '/' ? substr($uri, 1) : $uri);
-
         return $route;
     }
 
@@ -45,11 +43,11 @@ class Router
     {
         $attributes = end($this->groupStack);
 
-        $uri = isset($attributes['prefix']) ? trim($attributes['prefix'], '/').'/'.trim($route->getUri(), '/') : $route->getUri();
+        $prefix = isset($attributes['prefix']) ? trim($attributes['prefix'], '/') : '';
 
         $namespace = isset($attributes['namespace']) ? trim($attributes['namespace'], '\\') : '';
 
-        $route->setUri($uri)->setNamespace($namespace)->setMiddleware($attributes['middleware'] ?? []);
+        $route->prefix($prefix)->namespace($namespace)->middleware($attributes['middleware'] ?? []);
     }
 
     protected function hasGroupStack()
