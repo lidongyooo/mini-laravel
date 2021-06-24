@@ -6,4 +6,6 @@ composer install
 
 注解路由定义在 App\Http\Controllers\AttributeController 里
 
-相关链接：https://learnku.com/articles/53227
+### 相关链接
+- https://learnku.com/articles/53227
+- https://gitee.com/lidongyooo/mini-laravel
